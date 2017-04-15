@@ -55,30 +55,19 @@ class MainViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, S
     }
     
     func queryHeartRate() {
-        let query = HKAnchoredObjectQuery(type: self.heartRateType, predicate: nil, anchor: nil, limit: Int(HKObjectQueryNoLimit)) { (query, sampleObjects, deletedObjects, newAnchor, error) -> Void in
+        let query = HKAnchoredObjectQuery(type: self.heartRateType, predicate: nil, anchor: nil, limit: Int(HKObjectQueryNoLimit), resultsHandler: { (query, sampleObjects, deletedObjects, newAnchor, error) in
             
             if let err:NSError = error as NSError? {
                 print("Query Error: \(err.localizedDescription)")
             } else {
                 if let samples = sampleObjects as? [HKQuantitySample] {
                     if let quantity = samples.last?.quantity {
-                        print("Sample: \(quantity.doubleValue(for: self.heartRateUnit))")
+                        print("Sample: \(quantity.doubleValue(for: self.heartRateUnit)) at time: \(String(describing: samples.last?.endDate))")
                     }
                 }
             }
-        }
+        })
         
-        query.updateHandler = {(query, sampleObjects, deleteObjects, newAnchor, error) -> Void in
-            if let err:NSError = error as NSError? {
-                print("Query Error: \(err.localizedDescription)")
-            } else {
-                if let samples = sampleObjects as? [HKQuantitySample] {
-                    if let quantity = samples.last?.quantity {
-                        print("Updated sample!!! : \(quantity.doubleValue(for: self.heartRateUnit))")
-                    }
-                }
-            }
-        }
         self.health.execute(query)
     }
 
@@ -125,12 +114,12 @@ class MainViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, S
        print("logged in")
         
             self.nextSong.isHidden = false
-            self.player?.playSpotifyURI("spotify:user:leoxia360:playlist:7E5AEH4mIljpXkpxs1lha7", startingWith: 0, startingWithPosition: 0, callback: { (error) in
-                if (error != nil) {
-                    print("playing!")
-                }
-                
-            })
+//            self.player?.playSpotifyURI("spotify:user:leoxia360:playlist:7E5AEH4mIljpXkpxs1lha7", startingWith: 0, startingWithPosition: 0, callback: { (error) in
+//                if (error != nil) {
+//                    print("playing!")
+//                }
+//                
+//            })
     }
 
     @IBAction func nextSongButtonPressed(_ sender: Any) {
