@@ -53,11 +53,8 @@ class MainViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, S
         auth.clientID        = clientID
         auth.requestedScopes = [SPTAuthStreamingScope, SPTAuthPlaylistReadPrivateScope, SPTAuthPlaylistModifyPublicScope, SPTAuthPlaylistModifyPrivateScope]
         loginUrl = auth.spotifyWebAuthenticationURL()
-<<<<<<< HEAD:Beet/MainViewController.swift
-=======
         self.nextSong.isHidden = true
         
->>>>>>> 66fc21cb7ff99622cabe90e5ad92f2232eb5625b:SpotifySDKDemo/MainViewController.swift
     }
     
     func initializePlayer(authSession:SPTSession){
@@ -88,14 +85,6 @@ class MainViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, S
     
     func audioStreamingDidLogin(_ audioStreaming: SPTAudioStreamingController!) {
         // after a user authenticates a session, the SPTAudioStreamingController is then initialized and this method called
-<<<<<<< HEAD:Beet/MainViewController.swift
-        print("logged in")
-        self.player?.playSpotifyURI("spotify:track:58s6EuEYJdlb0kO7awm3Vp", startingWith: 0, startingWithPosition: 0, callback: { (error) in
-            if (error != nil) {
-                print("playing!")
-            }
-        })
-=======
        print("logged in")
         
             self.nextSong.isHidden = false
@@ -105,8 +94,6 @@ class MainViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, S
                 }
                 
             })
-        
->>>>>>> 66fc21cb7ff99622cabe90e5ad92f2232eb5625b:SpotifySDKDemo/MainViewController.swift
     }
 
     @IBAction func nextSongButtonPressed(_ sender: Any) {
