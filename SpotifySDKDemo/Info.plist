@@ -22,10 +22,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>putYourIdentifierHere</string>
+			<string>com.example.leo.beet</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>putYourURLSchemeHere</string>
+				<string>beet-login</string>
 			</array>
 		</dict>
 	</array>

@@ -53,10 +53,10 @@ class MainViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, S
 
     func setup () {
         // insert redirect your url and client ID below
-        let redirectURL = "" // put your redirect URL here
-        let clientID = "" // put your client ID here
+        let redirectURL = "beet-login://callback" // put your redirect URL here
+        let clientID = "d1003042be864a2a8e2b6188fb8d74b1" // put your client ID here
         auth.redirectURL     = URL(string: redirectURL)
-        auth.clientID        = ""
+        auth.clientID        = clientID
         auth.requestedScopes = [SPTAuthStreamingScope, SPTAuthPlaylistReadPrivateScope, SPTAuthPlaylistModifyPublicScope, SPTAuthPlaylistModifyPrivateScope]
         loginUrl = auth.spotifyWebAuthenticationURL()
         
