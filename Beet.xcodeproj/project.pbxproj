@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1B4A84E81EA2B83F007D16C1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B4A84E71EA2B83F007D16C1 /* AVFoundation.framework */; };
 		1B4A84EA1EA2B846007D16C1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B4A84E91EA2B846007D16C1 /* SystemConfiguration.framework */; };
+		1B4A84EC1EA2C2D5007D16C1 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B4A84EB1EA2C2D5007D16C1 /* HealthKit.framework */; };
+		1B4A84F21EA2C32E007D16C1 /* HealthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4A84F01EA2C32E007D16C1 /* HealthManager.swift */; };
 		1B52DCAB1EA2AEA600E75A26 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B52DCA21EA2AEA600E75A26 /* AppDelegate.swift */; };
 		1B52DCAC1EA2AEA600E75A26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B52DCA31EA2AEA600E75A26 /* Assets.xcassets */; };
 		1B52DCAF1EA2AEA600E75A26 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B52DCA71EA2AEA600E75A26 /* MainViewController.swift */; };
@@ -39,6 +41,9 @@
 /* Begin PBXFileReference section */
 		1B4A84E71EA2B83F007D16C1 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		1B4A84E91EA2B846007D16C1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		1B4A84EB1EA2C2D5007D16C1 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		1B4A84F01EA2C32E007D16C1 /* HealthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HealthManager.swift; path = Beet/HealthManager.swift; sourceTree = SOURCE_ROOT; };
+		1B4A84F31EA2C4A7007D16C1 /* Beet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Beet.entitlements; path = Beet/Beet.entitlements; sourceTree = SOURCE_ROOT; };
 		1B52DCA21EA2AEA600E75A26 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Beet/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
 		1B52DCA31EA2AEA600E75A26 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Beet/Assets.xcassets; sourceTree = SOURCE_ROOT; };
 		1B52DCA51EA2AEA600E75A26 /* Beet-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Beet-Bridging-Header.h"; path = "Beet/Beet-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
@@ -59,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B4A84EC1EA2C2D5007D16C1 /* HealthKit.framework in Frameworks */,
 				1B4A84EA1EA2B846007D16C1 /* SystemConfiguration.framework in Frameworks */,
 				1B4A84E81EA2B83F007D16C1 /* AVFoundation.framework in Frameworks */,
 				1B52DCB11EA2AEA600E75A26 /* SpotifyAuthentication.framework in Frameworks */,
@@ -87,6 +93,7 @@
 		1B4A84E61EA2B83F007D16C1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1B4A84EB1EA2C2D5007D16C1 /* HealthKit.framework */,
 				1B4A84E91EA2B846007D16C1 /* SystemConfiguration.framework */,
 				1B4A84E71EA2B83F007D16C1 /* AVFoundation.framework */,
 			);
@@ -115,8 +122,10 @@
 		EF34844B1E55D5BA007F7453 /* Beet */ = {
 			isa = PBXGroup;
 			children = (
+				1B4A84F31EA2C4A7007D16C1 /* Beet.entitlements */,
 				1B52DCA21EA2AEA600E75A26 /* AppDelegate.swift */,
 				1B52DCA71EA2AEA600E75A26 /* MainViewController.swift */,
+				1B4A84F01EA2C32E007D16C1 /* HealthManager.swift */,
 				1B52DCA31EA2AEA600E75A26 /* Assets.xcassets */,
 				1B52DCC91EA2B2D700E75A26 /* Main.storyboard */,
 				1B52DCA61EA2AEA600E75A26 /* Info.plist */,
@@ -209,6 +218,11 @@
 						DevelopmentTeam = L2JS3CUT43;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.HealthKit = {
+								enabled = 1;
+							};
+						};
 					};
 					EF34845C1E55D5BA007F7453 = {
 						CreatedOnToolsVersion = 8.1;
@@ -278,6 +292,7 @@
 			files = (
 				1B52DCAB1EA2AEA600E75A26 /* AppDelegate.swift in Sources */,
 				1B52DCAF1EA2AEA600E75A26 /* MainViewController.swift in Sources */,
+				1B4A84F21EA2C32E007D16C1 /* HealthManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,6 +442,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Beet/Beet.entitlements;
 				DEVELOPMENT_TEAM = L2JS3CUT43;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -447,6 +463,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Beet/Beet.entitlements;
 				DEVELOPMENT_TEAM = L2JS3CUT43;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

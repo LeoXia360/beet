@@ -9,9 +9,15 @@
 import UIKit
 import SafariServices
 import AVFoundation
+import HealthKit
 
 class MainViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, SPTAudioStreamingDelegate {
 
+    let health: HKHealthStore = HKHealthStore()
+    let heartRateUnit: HKUnit = HKUnit(from: "count/min")
+    let heartRateType: HKQuantityType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)!
+
+    
     //--------------------------------------
     // MARK: Variables
     //--------------------------------------
@@ -43,6 +49,37 @@ class MainViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, S
         setup()
         NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.updateAfterFirstLogin), name: NSNotification.Name(rawValue: "loginSuccessfull"), object: nil)
         
+        HealthManager.authorizeHealthKit()
+        
+        self.queryHeartRate()
+    }
+    
+    func queryHeartRate() {
+        let query = HKAnchoredObjectQuery(type: self.heartRateType, predicate: nil, anchor: nil, limit: Int(HKObjectQueryNoLimit)) { (query, sampleObjects, deletedObjects, newAnchor, error) -> Void in
+            
+            if let err:NSError = error as NSError? {
+                print("Query Error: \(err.localizedDescription)")
+            } else {
+                if let samples = sampleObjects as? [HKQuantitySample] {
+                    if let quantity = samples.last?.quantity {
+                        print("Sample: \(quantity.doubleValue(for: self.heartRateUnit))")
+                    }
+                }
+            }
+        }
+        
+        query.updateHandler = {(query, sampleObjects, deleteObjects, newAnchor, error) -> Void in
+            if let err:NSError = error as NSError? {
+                print("Query Error: \(err.localizedDescription)")
+            } else {
+                if let samples = sampleObjects as? [HKQuantitySample] {
+                    if let quantity = samples.last?.quantity {
+                        print("Updated sample!!! : \(quantity.doubleValue(for: self.heartRateUnit))")
+                    }
+                }
+            }
+        }
+        self.health.execute(query)
     }
 
     func setup () {
