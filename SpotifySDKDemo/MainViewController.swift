@@ -32,6 +32,7 @@ class MainViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, S
     //--------------------------------------
     
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var nextSong: UIButton!
     
     
     //--------------------------------------
@@ -59,6 +60,7 @@ class MainViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, S
         auth.clientID        = clientID
         auth.requestedScopes = [SPTAuthStreamingScope, SPTAuthPlaylistReadPrivateScope, SPTAuthPlaylistModifyPublicScope, SPTAuthPlaylistModifyPrivateScope]
         loginUrl = auth.spotifyWebAuthenticationURL()
+        self.nextSong.isHidden = true
         
     }
     
@@ -89,7 +91,6 @@ class MainViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, S
             self.session = firstTimeSession
             initializaPlayer(authSession: session)
             self.loginButton.isHidden = true
-           // self.loadingLabel.isHidden = false
             
         }
         
@@ -98,7 +99,9 @@ class MainViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, S
     func audioStreamingDidLogin(_ audioStreaming: SPTAudioStreamingController!) {
         // after a user authenticates a session, the SPTAudioStreamingController is then initialized and this method called
        print("logged in")
-            self.player?.playSpotifyURI("spotify:track:58s6EuEYJdlb0kO7awm3Vp", startingWith: 0, startingWithPosition: 0, callback: { (error) in
+        
+            self.nextSong.isHidden = false
+            self.player?.playSpotifyURI("spotify:user:leoxia360:playlist:7E5AEH4mIljpXkpxs1lha7", startingWith: 0, startingWithPosition: 0, callback: { (error) in
                 if (error != nil) {
                     print("playing!")
                 }
@@ -107,6 +110,13 @@ class MainViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, S
         
     }
 
+    @IBAction func nextSongButtonPressed(_ sender: Any) {
+        self.player?.skipNext({ (error) in
+            if (error != nil){
+                print("next song")
+            }
+        })
+    }
     
     @IBAction func loginButtonPressed(_ sender: Any) {
         
