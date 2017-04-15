@@ -10,8 +10,6 @@ import UIKit
 import SafariServices
 import AVFoundation
 
-
-
 class MainViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, SPTAudioStreamingDelegate {
 
     //--------------------------------------
@@ -46,11 +44,6 @@ class MainViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, S
         
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     func setup () {
         // insert redirect your url and client ID below
         let redirectURL = "beet-login://callback" // put your redirect URL here
@@ -59,25 +52,19 @@ class MainViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, S
         auth.clientID        = clientID
         auth.requestedScopes = [SPTAuthStreamingScope, SPTAuthPlaylistReadPrivateScope, SPTAuthPlaylistModifyPublicScope, SPTAuthPlaylistModifyPrivateScope]
         loginUrl = auth.spotifyWebAuthenticationURL()
-        
     }
     
-    func initializaPlayer(authSession:SPTSession){
+    func initializePlayer(authSession:SPTSession){
         if self.player == nil {
-            
-            
             self.player = SPTAudioStreamingController.sharedInstance()
             self.player!.playbackDelegate = self
             self.player!.delegate = self
             try! player?.start(withClientId: auth.clientID)
             self.player!.login(withAccessToken: authSession.accessToken)
-            
         }
-        
     }
     
     func updateAfterFirstLogin () {
-        
         loginButton.isHidden = true
         let userDefaults = UserDefaults.standard
         
@@ -87,40 +74,30 @@ class MainViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, S
             let firstTimeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
             
             self.session = firstTimeSession
-            initializaPlayer(authSession: session)
+            initializePlayer(authSession: session)
             self.loginButton.isHidden = true
            // self.loadingLabel.isHidden = false
             
         }
-        
     }
     
     func audioStreamingDidLogin(_ audioStreaming: SPTAudioStreamingController!) {
         // after a user authenticates a session, the SPTAudioStreamingController is then initialized and this method called
-       print("logged in")
-            self.player?.playSpotifyURI("spotify:track:58s6EuEYJdlb0kO7awm3Vp", startingWith: 0, startingWithPosition: 0, callback: { (error) in
-                if (error != nil) {
-                    print("playing!")
-                }
-                
-            })
-        
+        print("logged in")
+        self.player?.playSpotifyURI("spotify:track:58s6EuEYJdlb0kO7awm3Vp", startingWith: 0, startingWithPosition: 0, callback: { (error) in
+            if (error != nil) {
+                print("playing!")
+            }
+        })
     }
 
     
     @IBAction func loginButtonPressed(_ sender: Any) {
-        
-   //     UIApplication.shared.open(loginUrl!, options: nil, completionHandler: nil)
-        
         if UIApplication.shared.openURL(loginUrl!) {
-            
             if auth.canHandle(auth.redirectURL) {
                 // To do - build in error handling
             }
         }
     }
-    
-    
-
 }
 
